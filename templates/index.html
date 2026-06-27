@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Klasifikasi Alpukat Real-time</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen transition-smooth">
+
+    <header class="bg-emerald-800 border-b border-emerald-700 shadow-md transition-smooth" id="app-header">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-3xl">🥑</span>
+                <h1 class="text-xl font-black uppercase tracking-wider">Sistem Deteksi Kualitas Buah Alpukat</h1>
+            </div>
+            <div class="bg-emerald-900/80 border border-emerald-600 text-emerald-300 text-xs px-4 py-2 rounded-full font-bold shadow-inner">
+                COMPUTER VISION REALTIME DETECTION
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <section class="flex flex-col space-y-4">
+            <div class="relative bg-gray-800 rounded-2xl p-4 shadow-2xl border-4 border-gray-700 transition-smooth" id="webcam-card-container">
+                
+                <div class="absolute top-8 left-8 z-10 flex items-center space-x-2 bg-black/70 px-3 py-1.5 rounded-full backdrop-blur-md">
+                    <span class="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
+                    <span class="text-[10px] font-black tracking-widest text-white uppercase">LIVE STREAM</span>
+                </div>
+                
+                <div class="relative overflow-hidden rounded-xl bg-black aspect-[4/3] shadow-inner">
+                    <video id="live-webcam" autoplay playsinline class="w-full h-full object-cover video-mirror"></video>
+                    
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="w-64 h-64 border-2 border-dashed border-yellow-400 rounded-2xl bg-yellow-400/5 flex items-end justify-center pb-3 roi-guide-box">
+                            <span class="text-[10px] font-extrabold tracking-widest text-yellow-300 bg-black/75 px-3 py-1 rounded-md uppercase border border-yellow-500/20">Letakkan Alpukat Di Sini</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-800/50 border border-gray-700/60 rounded-xl p-4 text-xs text-gray-400 space-y-1">
+                <p class="font-bold text-gray-300 uppercase mb-1">Panduan Pengujian:</p>
+                <p>• Tempatkan buah alpukat tepat di tengah area kotak kuning putus-putus.</p>
+            </div>
+        </section>
+
+        <section class="flex flex-col space-y-6">
+            
+            <div class="bg-gray-800 rounded-2xl p-6 shadow-2xl border border-gray-700/60 transition-smooth" id="status-panel-container">
+                <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">Status Kualitas Buah</p>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-3xl font-black tracking-tight text-gray-200 transition-smooth" id="ui-nama-label">MENUNGGU BUAH...</h2>
+                    <span class="bg-gray-700 text-gray-400 text-xs px-3 py-1.5 rounded-lg font-black tracking-wider uppercase border border-gray-600 shadow-sm" id="ui-badge-status">Idle</span>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl p-6 shadow-2xl border border-gray-700/60 space-y-6">
+                <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest border-b border-gray-700/60 pb-2.5">Statistik Fitur Citra</h3>
+                
+                <div class="space-y-2.5">
+                    <div class="flex justify-between text-sm font-bold">
+                        <span class="text-gray-400">Tingkat Keyakinan (Confidence)</span>
+                        <span class="text-gray-200" id="ui-text-confidence">0.0%</span>
+                    </div>
+                    <div class="w-full bg-gray-900 h-3.5 rounded-full p-0.5 shadow-inner overflow-hidden">
+                        <div id="ui-bar-confidence" class="bg-gray-600 h-full w-0 transition-all duration-300 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-gray-900/40 p-4 rounded-xl border border-gray-700/50 shadow-md">
+                        <p class="text-[11px] font-black text-emerald-400 uppercase tracking-wider mb-1">Luas Piksel Bagus</p>
+                        <p class="text-2xl font-black text-gray-100" id="ui-area-bagus">0 <span class="text-xs font-medium text-gray-500">px</span></p>
+                    </div>
+                    <div class="bg-gray-900/40 p-4 rounded-xl border border-gray-700/50 shadow-md">
+                        <p class="text-[11px] font-black text-red-400 uppercase tracking-wider mb-1">Luas Piksel Busuk</p>
+                        <p class="text-2xl font-black text-gray-100" id="ui-area-busuk">0 <span class="text-xs font-medium text-gray-500">px</span></p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between text-[11px] text-gray-500 pt-3 border-t border-gray-700/50 font-medium tracking-wide">
+                    <span id="ui-api-status">Server Status: Menghubungkan...</span>
+                    <span id="ui-timestamp">Waktu Ambil: -</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <canvas id="hidden-frame-canvas" width="640" height="480" class="hidden"></canvas>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+/* Kustomisasi pembalik arah webcam */
+.video-mirror {
+    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+}
+
+/* Transisi perubahan warna real-time */
+.transition-smooth {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efek denyut kotak kuning ROI panduan */
+@keyframes pulse-roi {
+    0%, 100% { opacity: 0.6; border-width: 2px; }
+    50% { opacity: 1; border-width: 4px; }
+}
+
+.roi-guide-box {
+    animation: pulse-roi 2.5s infinite;
+}

@@ -1,0 +1,11 @@
+{
+    "img_size": [300, 300],
+    "min_mask_area": 5000,
+    "ratio_threshold": 0.7,
+    "hsv_bounds": {
+        "lower_bagus": [35, 40, 40],
+        "upper_bagus": [85, 255, 255],
+        "lower_busuk": [0, 40, 20], 
+        "upper_busuk": [30, 255, 140]
+    }
+}
