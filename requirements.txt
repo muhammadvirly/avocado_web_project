@@ -1,4 +1,6 @@
 Flask
+flask-cors
+gunicorn
 Werkzeug
 numpy
 opencv-python-headless
