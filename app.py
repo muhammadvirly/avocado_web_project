@@ -1,12 +1,10 @@
 # app.py — Flask Web Server untuk Klasifikasi Kualitas Alpukat
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from avocado_engine import predict_image
 import cv2
 import numpy as np
 
-from flask import Flask, request, jsonify, render_template # <-- TAMBAHKAN render_template
-from flask_cors import CORS
 app = Flask(__name__)
 # Mengizinkan akses Cross-Origin agar JavaScript dari frontend bisa menembak API
 CORS(app)  
