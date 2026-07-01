@@ -4,4 +4,3 @@ gunicorn
 Werkzeug
 numpy
 opencv-python-headless
-rembg[cpu]
