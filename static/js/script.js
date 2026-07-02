@@ -58,10 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Sesuaikan key "file" dengan yang diminta oleh request.files di app.py
             formData.append("file", blob, "webcam_frame.png");
 
-            // Menembak alamat endpoint Flask server eksternal port 5000 secara eksplisit
-            fetch('http://127.0.0.1:5000/predict', {
+            // Menembak alamat endpoint Flask server 
+            fetch('/predict', {
                 method: 'POST',
-                body: formData // Mengirim multipart/form-data biner asli
+                body: formData
             })
             .then(response => {
                 if (!response.ok) throw new Error("API Offline / Bad Response");
